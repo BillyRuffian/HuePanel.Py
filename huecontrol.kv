@@ -1,0 +1,37 @@
+<Lights>:
+    size: ( self.parent.size[0] * 0.6 ), self.parent.size[1]
+
+<GroupPanel>:
+    size: ( self.parent.size[0] * 0.4 ), self.parent.size[1]
+
+<GroupListPanel>:
+    size: ( self.parent.size[0] * 0.4 ), self.parent.size[1]
+    ListView:
+        item_strings: sorted( map( lambda group: group['name'], root.groups ) )
+        canvas.before:
+            Color:
+                rgb: 0, 0, 0
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+<ControlPanel>:
+    id: control_panel
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.1, 0.2, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            
+    GroupListPanel:
+        id: group_list
+        bridge: control_panel.bridge
+    
+    GroupPanel:
+        pos: ( self.parent.size[0] * 0.4 ), 0
+        
+        Lights:
+            pos_hint: { 'top': 0.95, 'x': 0.35 }
+            bridge: control_panel.bridge
+            group: group_list.group
