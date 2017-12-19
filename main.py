@@ -44,6 +44,8 @@ class ControlPanel( Widget ):
         logging.info( self.bridge )
 
 class HueControlApp( App ):
+    """Kivy main class."""
+    
     def build( self ):
         control_panel = ControlPanel()
         control_panel.connect_to_bridge()
