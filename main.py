@@ -28,7 +28,6 @@ class HueControlApp( App ):
         logging.info( 'Connecting to Hue bridge' )
         hue = Hue()
         self.bridge = hue.bridge()
-        logging.info( self.bridge )
         self.root.ids.screen_manager.current = 'discovering lights'
         Clock.schedule_once( self.discover_lights, 3 )
         
@@ -64,6 +63,7 @@ class HueControlApp( App ):
             if self.groups[group]['name'] == name:
                 self.bridge.groups( group, 'action', on=( instance.state == 'down' ) )
                 break
+
         
 if __name__ == '__main__':
     app = HueControlApp()
