@@ -1,37 +1,53 @@
-<Lights>:
-    size: ( self.parent.size[0] * 0.6 ), self.parent.size[1]
+#: import sm kivy.uix.screenmanager
 
-<GroupPanel>:
-    size: ( self.parent.size[0] * 0.4 ), self.parent.size[1]
+<LightSwitch@ToggleButton>:
+    font_size: '30sp'
 
-<GroupListPanel>:
-    size: ( self.parent.size[0] * 0.4 ), self.parent.size[1]
-    ListView:
-        item_strings: sorted( map( lambda group: group['name'], root.groups ) )
-        canvas.before:
-            Color:
-                rgb: 0, 0, 0
-            Rectangle:
-                pos: self.pos
-                size: self.size
-
-<ControlPanel>:
-    id: control_panel
+BoxLayout:
+    orientation: 'vertical'
+    
     canvas.before:
         Color:
-            rgba: 0.1, 0.1, 0.2, 1
-        Rectangle:
-            pos: self.pos
-            size: self.size
+            rgb: .6, .6, .6
+#        Rectangle:
+#            size: self.size
+#            source: 'data/background.png'
             
-    GroupListPanel:
-        id: group_list
-        bridge: control_panel.bridge
-    
-    GroupPanel:
-        pos: ( self.parent.size[0] * 0.4 ), 0
+    ActionBar:
+        ActionView:
+            id: action_view
+            ActionPrevious:
+                title: 'Vaynor Farm'
+                with_previous: False
+                
+    ScreenManager:
+        id: screen_manager
+        transition: sm.FadeTransition()
+        Screen:
+            name: 'welcome'
+            BoxLayout:
+                Label:
+                    text: 'Hello'
+                    font_size: '40sp'
         
-        Lights:
-            pos_hint: { 'top': 0.95, 'x': 0.35 }
-            bridge: control_panel.bridge
-            group: group_list.group
+        Screen:
+            name: 'discovering lights'
+            BoxLayout:
+                Label:
+                    text: 'Discovering your lights...'
+                    font_size: '30sp'
+        
+        Screen:
+            name: 'switches'
+            GridLayout:
+                id: lightswitch_layout
+                cols: 3
+                rows: 3
+                spacing: 30,30
+                padding: 50, 50, 50, 50
+                    
+        
+<HueConnectScreen>:
+    BoxLayout:
+        Label:
+            text: 'Hello World'
