@@ -3,23 +3,7 @@
 <LightSwitch@ToggleButton>:
     font_size: '30sp'
 
-BoxLayout:
-    orientation: 'vertical'
-    
-    canvas.before:
-        Color:
-            rgb: .6, .6, .6
-#        Rectangle:
-#            size: self.size
-#            source: 'data/background.png'
-            
-    ActionBar:
-        ActionView:
-            id: action_view
-            ActionPrevious:
-                title: 'Vaynor Farm'
-                with_previous: False
-                
+<HuePanel>:
     ScreenManager:
         id: screen_manager
         transition: sm.FadeTransition()
@@ -45,5 +29,20 @@ BoxLayout:
                 rows: 3
                 spacing: 30,30
                 padding: 50, 50, 50, 50
+
+BoxLayout:
+    orientation: 'vertical'
+    
+    canvas.before:
+        Color:
+            rgb: .6, .6, .6
+            
+    ActionBar:
+        ActionView:
+            id: action_view
+            ActionPrevious:
+                title: 'Vaynor Farm'
+                with_previous: False
+    HuePanel:        
                     
         

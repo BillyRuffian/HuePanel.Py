@@ -16,19 +16,18 @@ import logging
 class LightSwitch( ToggleButton ):
     pass
 
-
-class HueControlApp( App ):
+class HuePanel( BoxLayout ):    
     
-    
-    def build( self ):
+    def __init__(self, **kwargs):
+        super(HuePanel, self).__init__(**kwargs)
         Clock.schedule_once( self.connect_to_bridge, 3 )
-        
+    
     
     def connect_to_bridge( self, dt ):
         logging.info( 'Connecting to Hue bridge' )
         hue = Hue()
         self.bridge = hue.bridge()
-        self.root.ids.screen_manager.current = 'discovering lights'
+        self.ids.screen_manager.current = 'discovering lights'
         Clock.schedule_once( self.discover_lights, 3 )
         
     
@@ -40,8 +39,8 @@ class HueControlApp( App ):
             toggle.state = 'down' if self.groups[group]['state']['any_on'] == True else 'normal'
             toggle.bind( on_press=self.toggle_pressed )
             self.toggles.append( toggle )
-            self.root.ids.lightswitch_layout.add_widget( toggle )
-        self.root.ids.screen_manager.current = 'switches'
+            self.ids.lightswitch_layout.add_widget( toggle )
+        self.ids.screen_manager.current = 'switches'
         Clock.schedule_interval( self.refresh_lights, 2.5 )
         
     
@@ -67,6 +66,11 @@ class HueControlApp( App ):
                 self.bridge.groups( group, 'action', on=( instance.state == 'down' ) )
                 break
 
+
+class HueControlApp( App ):
+    
+    def build( self ):
+        pass
         
 if __name__ == '__main__':
     app = HueControlApp()
