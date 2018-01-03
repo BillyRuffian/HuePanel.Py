@@ -47,12 +47,15 @@ class HueControlApp( App ):
     
     def refresh_lights( self, dt ):
         # this is super ugly, there must be a better way
-        self.groups = self.bridge.groups()
-        for group in self.groups:
-            for toggle in self.toggles:
-                if self.groups[group]['name'] == toggle.text:
-                    toggle.state = 'down' if self.groups[group]['state']['any_on'] == True else 'normal'
-                    break
+        try:
+            self.groups = self.bridge.groups()
+            for group in self.groups:
+                for toggle in self.toggles:
+                    if self.groups[group]['name'] == toggle.text:
+                        toggle.state = 'down' if self.groups[group]['state']['any_on'] == True else 'normal'
+                        break
+        except:
+            logging.warn( 'could not query groups status' )
                     
     
     def toggle_pressed( self, instance ):
